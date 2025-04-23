@@ -13,7 +13,6 @@ question(tia_4, 'A pessoa tem sintomas físicos como tontura, sudorese ou palide
 % FASE VERMELHA
 question(dm_1, 'Doença Mental Fase Vermelha - A pessoa está com dificuldades ao respirar e/ou parece sufocado? (sim/nao)').
 question(dm_2, 'Doença Mental Fase Vermelha - A pessoa está muito pálida, a tremer ou a suar? (sim/nao)').
-question(dm_3, 'Doença Mental Fase Vermelha - Os níveis de glicose no sangue encontram-se acima dos valores normais? (sim/nao)').
 % FASE LARANJA
 question(dm_4, 'Doença Mental Fase Laranja - A pessoa está muito agressiva, tenta magoar alguém ou menciona querer magoar alguém? (sim/nao)').
 question(dm_5, 'Doença Mental Fase Laranja - A pessoa está muito agitada ou com um olhar perdido? (sim/nao)').
@@ -30,8 +29,6 @@ question(aa_1, 'AutoAgressão Fase Vermelha - O paciente apresenta respiração 
 % FASE LARANJA
 question(aa_2, 'AutoAgressão Fase Laranja - Houve alteração súbita da consciência ou fala incoerente, agitação severa não controlável? (sim/nao)').
 question(aa_3, 'AutoAgressão Fase Laranja - A pessoa apresenta dor intensa? (sim/nao)').
-question(aa_4, 'AutoAgressão Fase Laranja - A pessoa tem dificuldade em respirar? (sim/nao)').
-question(aa_5, 'AutoAgressão Fase Laranja - A pessoa apresenta uma hemorragia grave? (sim/nao)').
 % FASE AMARELA
 question(aa_7, 'AutoAgressão Fase Amarela - A pessoa apresenta um indício de tosse com sangue? (sim/nao)').
 question(aa_8, 'AutoAgressão Fase Amarela - A pessoa apresenta vómito com sangue? (sim/nao)').

@@ -15,8 +15,8 @@
 % ---------------------- Regras ------------------------
 
 % Doença Mental
-if(fact(dm_1, sim)) then vermelho:0.9.
-if(fact(dm_2, sim)) then vermelho:0.9.
+if(fact(dm_1, sim)) then vermelho:1.
+if(fact(dm_2, sim)) then vermelho:0.95.
 if(fact(dm_3, sim)) then vermelho:0.8.
 if(fact(dm_4, sim)) then laranja:0.85.
 if(fact(dm_5, sim)) then laranja:0.8.
@@ -25,7 +25,7 @@ if(fact(dm_7, sim)) then amarelo:0.7.
 if((fact(dm_8, sim), fact(dm_9, sim))) then verde:0.9.
 
 % Autoagressão
-if(fact(aa_1, sim)) then vermelho:0.95.
+if(fact(aa_1, sim)) then vermelho:1.
 if(fact(aa_2, sim)) then laranja:0.9.
 if(fact(aa_3, sim)) then laranja:0.85.
 if(fact(aa_4, sim)) then laranja:0.8.
@@ -41,8 +41,8 @@ if(fact(aa_14, sim)) then verde:0.6.
 if(fact(aa_15, sim)) then verde:0.6.
 
 % Mal estar
-if(fact(me_1, sim)) then vermelho:0.9.
-if(fact(me_2, sim)) then vermelho:0.85.
+if(fact(me_1, sim)) then vermelho:1.
+if(fact(me_2, sim)) then vermelho:0.95.
 if(fact(me_3, sim)) then laranja:0.85.
 if(fact(me_4, sim)) then laranja:0.8.
 if(fact(me_5, regular)) then laranja:0.75.
@@ -57,12 +57,12 @@ if(fact(me_12, sim)) then verde:0.6.
 if(fact(me_13, sim)) then verde:0.6.
 
 % Agressão
-if(fact(ag_1, sim)) then vermelho:0.9.
+if(fact(ag_1, sim)) then vermelho:1.
 if(fact(ag_2, sim)) then verde:0.95.
 if(fact(ag_3, sim)) then laranja:0.8.
 
 % Embriaguez
-if(fact(emb_1, sim)) then vermelho:0.9.
+if(fact(emb_1, sim)) then vermelho:1.
 if(fact(emb_2, sim)) then laranja:0.85.
 if(fact(emb_3, sim)) then amarelo:0.8.
 
