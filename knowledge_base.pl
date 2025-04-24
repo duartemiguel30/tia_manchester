@@ -45,8 +45,6 @@ if(fact(me_1, sim)) then vermelho:1.
 if(fact(me_2, sim)) then vermelho:0.95.
 if(fact(me_3, sim)) then laranja:0.85.
 if(fact(me_4, sim)) then laranja:0.8.
-if(fact(me_5, regular)) then laranja:0.75.
-if(fact(me_5, serpentino)) then vermelho:0.9.
 if(fact(me_6, sim)) then laranja:0.75.
 if(fact(me_7, sim)) then amarelo:0.75.
 if(fact(me_8, sim)) then amarelo:0.75.

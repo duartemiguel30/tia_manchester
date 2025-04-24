@@ -2,12 +2,12 @@ import pandas as pd
 from sklearn.tree import DecisionTreeClassifier, _tree
 
 # Carrega dataset
-df = pd.read_csv('casos_simulados_com_diagr', encoding='utf-8')
+df = pd.read_csv('dados_ficticios_200.csv', encoding='utf-8')
 
 # Prepara X (features) e y (labels)
 X = df.drop(columns=['class']).copy()
 for col in X.columns:
-    X[col] = X[col].map({'sim': 1, 'nao': 0, 'regular': 0, 'serpentino': 1}).fillna(0)
+    X[col] = X[col].map({'sim': 1, 'nao': 0}).fillna(0)
 y = df['class']
 
 # Treina a Árvore de Decisão
