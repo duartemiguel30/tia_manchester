@@ -5,22 +5,30 @@
 :- use_module(interface).
 :- use_module(knowledge_base).
 
-:- dynamic modo_auto/0.
-
-start_triage(Modo) :-
-    (Modo == auto -> assertz(modo_auto) ; true),
+start_triage(_) :-
     interface:clear_answers,
 
     % Etapa Genérica
-    fazer_pergunta(tia_1, Ans1),
+    questions:question(tia_1, Q1),
+    interface:ask_question(tia_1, Q1),
+    interface:get_answer(tia_1, Ans1),
+
     ( Ans1 == sim ->
-        fazer_pergunta(tia_2a, Ans2a),
+        questions:question(tia_2a, Q2a),
+        interface:ask_question(tia_2a, Q2a),
+        interface:get_answer(tia_2a, Ans2a),
         ( Ans2a == sim -> Fluxo = autoagressao ; Fluxo = agressao )
-    ; fazer_pergunta(tia_2b, Ans2b),
+    ; questions:question(tia_2b, Q2b),
+      interface:ask_question(tia_2b, Q2b),
+      interface:get_answer(tia_2b, Ans2b),
       ( Ans2b == sim -> Fluxo = embriaguez
-      ; fazer_pergunta(tia_3, Ans3),
+      ; questions:question(tia_3, Q3),
+        interface:ask_question(tia_3, Q3),
+        interface:get_answer(tia_3, Ans3),
         ( Ans3 == sim -> Fluxo = doenca_mental
-        ; fazer_pergunta(tia_4, Ans4),
+        ; questions:question(tia_4, Q4),
+          interface:ask_question(tia_4, Q4),
+          interface:get_answer(tia_4, Ans4),
           ( Ans4 == sim -> Fluxo = mal_estar ; Fluxo = desconhecido )
         )
       )
@@ -29,10 +37,7 @@ start_triage(Modo) :-
     coletar_sintomas(Fluxo),
     diagnostico_por_fluxo(Fluxo, Resultado-CF-Explicacao),
     format('\nA cor (ou rótulo) da pulseira atribuída é: ~w (CF = ~2f)\n', [Resultado, CF]),
-    mostrar_explicacao(Explicacao),
-    (modo_auto -> retract(modo_auto) ; true).
-
-% ---------------------- Diagnóstico ------------------------
+    mostrar_explicacao(Explicacao).
 
 diagnostico_por_fluxo(doenca_mental, R) :- knowledge_base:dm_diagnostico(R).
 diagnostico_por_fluxo(autoagressao, R)   :- knowledge_base:aa_diagnostico(R).
@@ -65,17 +70,9 @@ coletar_sintomas(embriaguez) :-
 
 coletar_sintomas(_) :- true.
 
-% ---------------------- Modo Manual vs Automático ------------------------
-
-fazer_pergunta(ID, Resposta) :-
-    ( modo_auto ->
-        knowledge_base:resposta_automatica(ID, Resposta)
-    ; questions:question(ID, Q),
-      interface:ask_question(ID, Q),
-      interface:get_answer(ID, Resposta)
-    ).
-
 perguntar_fatos([]).
 perguntar_fatos([ID | Rest]) :-
-    fazer_pergunta(ID, _),
+    questions:question(ID, Q),
+    interface:ask_question(ID, Q),
+    interface:get_answer(ID, _),
     perguntar_fatos(Rest).
