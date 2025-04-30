@@ -1,7 +1,7 @@
 :- encoding(utf8).
 :- initialization(main).
 :- use_module(triage).
-% força uso do KB B
+
 :- dynamic use_auto_kb/0.
 use_auto_kb.
 
