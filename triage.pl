@@ -8,7 +8,6 @@
 start_triage(_) :-
     interface:clear_answers,
 
-    % Etapa Genérica
     questions:question(tia_1, Q1),
     interface:ask_question(tia_1, Q1),
     interface:get_answer(tia_1, Ans1),
@@ -51,7 +50,6 @@ mostrar_explicacao([CF-Cond|Rest]) :-
     format('Regra ativada com CF=~2f: ~w\n', [CF, Cond]),
     mostrar_explicacao(Rest).
 
-% ---------------------- Coleta de Sintomas ------------------------
 
 coletar_sintomas(doenca_mental) :-
     perguntar_fatos([dm_1, dm_2, dm_3, dm_4, dm_5, dm_6, dm_7, dm_8, dm_9]).

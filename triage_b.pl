@@ -10,7 +10,6 @@
 
 :- dynamic fact/2.
 
-% Início do processo de triagem
 start_triage(Classe) :-
     limpar_fatos,
     pedir_fatos,
@@ -18,11 +17,9 @@ start_triage(Classe) :-
     encontrar_classe(Classe),
     format('Classe determinada: ~w~n', [Classe]).
 
-% Limpa todos os fatos armazenados
 limpar_fatos :- 
     retractall(fact(_, _)).
 
-% Lista de atributos
 atributo(dm_1).
 atributo(dm_2).
 atributo(dm_3).
@@ -33,11 +30,9 @@ atributo(dm_7).
 atributo(dm_8).
 atributo(dm_9).
 
-% Pergunta os fatos ao usuário
 pedir_fatos :-
     forall(atributo(Attr), perguntar_fato(Attr)).
 
-% Pergunta individual para cada atributo
 perguntar_fato(Attr) :-
     ( question(Attr, Pergunta) -> format('~s~n', [Pergunta])
     ; format('~w (sim/nao): ', [Attr])
@@ -47,7 +42,6 @@ perguntar_fato(Attr) :-
     format('Fato inserido: fact(~w, ~w)~n', [Attr, Valor]), % Depuração
     assertz(fact(Attr, Valor)).
 
-% Normaliza a resposta do usuário
 normalizar_resposta(EntradaStr, sim) :-
     string_lower(EntradaStr, Lower),
     normalize_space(atom(Atom), Lower),
@@ -58,12 +52,10 @@ normalizar_resposta(EntradaStr, nao) :-
     member(Atom, [nao, n, no]), !.
 normalizar_resposta(_, nao).
 
-% Lista todos os fatos recolhidos
 listar_fatos :-
     writeln('Fatos recolhidos:'),
     forall(fact(A, V), format(' - ~w: ~w~n', [A, V])).
 
-% Encontra a classe final com base nas regras
 encontrar_classe(ClasseFinal) :-
     writeln('Iniciando busca por regras...'),
     findall(Prob-Classe, (
@@ -76,10 +68,9 @@ encontrar_classe(ClasseFinal) :-
     writeln(ListaProbs),
     (   ListaProbs \= []
     ->  sort(0, @>=, ListaProbs, [_-ClasseFinal | _])
-    ;   ClasseFinal = azul  % fallback
+    ;   ClasseFinal = azul  
     ).
 
-% Avalia uma condição individual
 condicoes_satisfeitas(true) :-
     writeln('Condição satisfeita: true').
 condicoes_satisfeitas((Cond1 , Conds)) :-
@@ -99,7 +90,6 @@ condicoes_satisfeitas(fact(A, V)) :-
     writeln(fact(A, V)),
     fact(A, V).
 
-% Avalia lista de condições
 condicoes_satisfeitas_lista([]).
 condicoes_satisfeitas_lista([C|Cs]) :-
     condicoes_satisfeitas(C),

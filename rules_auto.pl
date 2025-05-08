@@ -2,7 +2,6 @@
 :- module(rules_auto, [regra/2]).
 :- dynamic regra/2.
 
-% Sintaxe: regra(ListaDeCondicoes, Classe:Probabilidade)
 regra([\+ fact(dm_7, sim), \+ fact(dm_3, sim), \+ fact(dm_8, sim), \+ fact(dm_9, sim), \+ fact(dm_1, sim)], amarelo:0.67).
 regra([\+ fact(dm_7, sim), \+ fact(dm_3, sim), \+ fact(dm_8, sim), \+ fact(dm_9, sim), \+ fact(dm_1, sim)], azul:0.33).
 regra([\+ fact(dm_7, sim), \+ fact(dm_3, sim), \+ fact(dm_8, sim), \+ fact(dm_9, sim), fact(dm_1, sim)], amarelo:1.00).
@@ -54,5 +53,4 @@ regra([fact(dm_7, sim), fact(dm_3, sim), fact(dm_9, sim), \+ fact(dm_4, sim)], l
 regra([fact(dm_7, sim), fact(dm_3, sim), fact(dm_9, sim), \+ fact(dm_4, sim)], vermelho:0.50).
 regra([fact(dm_7, sim), fact(dm_3, sim), fact(dm_9, sim), fact(dm_4, sim)], vermelho:1.00).
 
-% Regra padrão
 regra([true], azul:0.0).
