@@ -13,7 +13,7 @@ question(tia_4, 'A pessoa tem sintomas físicos como tontura, sudorese ou palide
 % FASE VERMELHA
 question(dm_1, 'Doença Mental Fase Vermelha - A pessoa está com dificuldades ao respirar e/ou parece sufocado? (sim/nao)').
 question(dm_2, 'Doença Mental Fase Vermelha - A pessoa está muito pálida, a tremer ou a suar? (sim/nao)').
-% FASE LARANJA
+question(dm_3, 'Doença Mental Fase Vermelha - A pessoa sente-se extremamente mal (sim/nao)').
 question(dm_4, 'Doença Mental Fase Laranja - A pessoa está muito agressiva, tenta magoar alguém ou menciona querer magoar alguém? (sim/nao)').
 question(dm_5, 'Doença Mental Fase Laranja - A pessoa está muito agitada ou com um olhar perdido? (sim/nao)').
 % FASE AMARELA

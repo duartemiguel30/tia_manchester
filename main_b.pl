@@ -1,11 +1,13 @@
 :- encoding(utf8).
-:- initialization(main).
-:- use_module(triage).
+:- module(main_b, []).
 
-:- dynamic use_auto_kb/0.
-use_auto_kb.
+:- use_module(triage_b).
+
+
+:- initialization(main).
 
 main :-
     writeln('*** Triagem: Modo Automático (Parte B) ***'),
-    triage:start_triage(_),
+    start_triage(Classe),
+    format('Classe atribuída: ~w~n', [Classe]),
     halt.
