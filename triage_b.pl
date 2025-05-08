@@ -13,9 +13,7 @@
 start_triage(Classe) :-
     limpar_fatos,
     pedir_fatos,
-    listar_fatos,
-    encontrar_classe(Classe),
-    format('Classe determinada: ~w~n', [Classe]).
+    encontrar_classe(Classe).
 
 limpar_fatos :- 
     retractall(fact(_, _)).
@@ -34,13 +32,14 @@ pedir_fatos :-
     forall(atributo(Attr), perguntar_fato(Attr)).
 
 perguntar_fato(Attr) :-
+    \+ fact(Attr, _),  
     ( question(Attr, Pergunta) -> format('~s~n', [Pergunta])
     ; format('~w (sim/nao): ', [Attr])
     ),
     read_line_to_string(user_input, RespostaStr),
     normalizar_resposta(RespostaStr, Valor),
-    format('Fato inserido: fact(~w, ~w)~n', [Attr, Valor]), % Depuração
     assertz(fact(Attr, Valor)).
+
 
 normalizar_resposta(EntradaStr, sim) :-
     string_lower(EntradaStr, Lower),
@@ -52,16 +51,10 @@ normalizar_resposta(EntradaStr, nao) :-
     member(Atom, [nao, n, no]), !.
 normalizar_resposta(_, nao).
 
-listar_fatos :-
-    writeln('Fatos recolhidos:'),
-    forall(fact(A, V), format(' - ~w: ~w~n', [A, V])).
 
 encontrar_classe(ClasseFinal) :-
-    writeln('Iniciando busca por regras...'),
     findall(Prob-Classe, (
         regra(Condicoes, Classe:Prob),
-        writeln('Regra encontrada:'),
-        writeln(regra(Condicoes, Classe:Prob)),
         condicoes_satisfeitas_lista(Condicoes)
     ), ListaProbs),
     writeln('Regras aplicadas:'),
@@ -71,23 +64,13 @@ encontrar_classe(ClasseFinal) :-
     ;   ClasseFinal = azul  
     ).
 
-condicoes_satisfeitas(true) :-
-    writeln('Condição satisfeita: true').
 condicoes_satisfeitas((Cond1 , Conds)) :-
-    writeln('Condição composta:'),
-    writeln(Cond1),
     condicoes_satisfeitas(Cond1),
     condicoes_satisfeitas(Conds).
 condicoes_satisfeitas(\+ Cond) :-
-    writeln('Negação encontrada:'),
-    writeln(Cond),
     (   \+ condicoes_satisfeitas(Cond)
-    ->  writeln('Negação satisfeita.')
-    ;   writeln('Negação falhou.'), fail
     ).
 condicoes_satisfeitas(fact(A, V)) :-
-    writeln('Condição simples:'),
-    writeln(fact(A, V)),
     fact(A, V).
 
 condicoes_satisfeitas_lista([]).
