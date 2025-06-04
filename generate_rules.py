@@ -1,6 +1,6 @@
 import pandas as pd
-from sklearn.tree import DecisionTreeClassifier, _tree
-from collections import defaultdict
+from sklearn.tree import DecisionTreeClassifier, _tree, plot_tree
+import matplotlib.pyplot as plt
 
 # Carrega o dataset
 df = pd.read_csv('dm_data_with_class.csv', encoding='utf-8')
@@ -16,6 +16,17 @@ y = df['class']
 # Treina a Árvore de Decisão
 clf = DecisionTreeClassifier(max_depth=5, min_samples_leaf=5)
 clf.fit(X, y)
+
+# Visualiza a árvore de decisão
+plt.figure(figsize=(20, 10))
+plot_tree(clf,
+          feature_names=X.columns,
+          class_names=clf.classes_,
+          filled=True,
+          rounded=True,
+          fontsize=10)
+plt.title("Árvore de Decisão para Triagem")
+plt.show()
 
 # Função para converter árvore em regras Prolog com probabilidades
 def tree_to_prolog(tree, feature_names, class_names):
@@ -42,14 +53,12 @@ def tree_to_prolog(tree, feature_names, class_names):
     recurse(0, [])
     return rules
 
-# Geração das regras Prolog e escrita em arquivo
 rules = tree_to_prolog(clf, list(X.columns), clf.classes_)
 with open('rules_auto.pl', 'w', encoding='utf-8') as f:
     f.write('% Regras geradas automaticamente\n')
     for conds, cls, prob in rules:
         cond_str = ' , '.join(conds) if conds else 'true'
         f.write(f"if({cond_str}) then {cls}:{prob:.2f}.\n")
-    # Regra padrão para casos não cobertos
     f.write("\n% Regra padrão para casos não cobertos\n")
     f.write("if(true) then azul:0.0.\n")
 
