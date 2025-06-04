@@ -15,6 +15,9 @@ question(dm_4, 'Doença Mental Fase Laranja - A pessoa está muito agitada ou co
 question(dm_5, 'Doença Mental Fase Amarela - A pessoa está a dizer coisas sem sentido ou diz ver coisas que não existem? (sim/nao)').
 question(dm_6, 'Doença Mental Fase Verde - A pessoa está calma e consegue falar coerentemente? (sim/nao)').
 question(dm_7, 'Doença Mental Fase Verde - A pessoa não apresenta sinais de fraqueza, mal estar ou tonturas? (sim/nao)').
+question(dm_8, 'Doença Mental - A pessoa demonstra estar muito confusa ou desorientada? (sim/nao)').
+question(dm_9, 'Doença Mental- A pessoa está a chorar ou mostra sinais visíveis de sofrimento emocional? (sim/nao)').
+
 
 question(aa_1, 'AutoAgressão Fase Vermelha - O paciente apresenta respiração inadequada, impossibilitada, hemorragia maciça, sinais de choque? (sim/nao)').
 question(aa_2, 'AutoAgressão Fase Laranja - Houve alteração súbita da consciência ou fala incoerente, agitação severa não controlável? (sim/nao)').

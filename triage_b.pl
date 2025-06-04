@@ -1,7 +1,7 @@
 :- encoding(utf8).
 :- module(triage_b, [start_triage/1]).
-
 :- ensure_loaded(rules_auto).
+
 :- use_module(rules_auto).
 :- use_module(questions).
 
@@ -15,7 +15,7 @@ start_triage(Classe) :-
     pedir_fatos,
     encontrar_classe(Classe).
 
-limpar_fatos :-
+limpar_fatos :- 
     retractall(fact(_, _)).
 
 atributo(dm_1).
@@ -25,20 +25,21 @@ atributo(dm_4).
 atributo(dm_5).
 atributo(dm_6).
 atributo(dm_7).
+atributo(dm_8).
+atributo(dm_9).
 
 pedir_fatos :-
     forall(atributo(Attr), perguntar_fato(Attr)).
 
 perguntar_fato(Attr) :-
-    \+ fact(Attr, _), 
-    (   question(Attr, Pergunta)  
-    ->  format('~s (sim/nao): ', [Pergunta])
-    ;   format('~w (sim/nao): ', [Attr])
+    \+ fact(Attr, _),  
+    ( question(Attr, Pergunta) -> format('~s~n', [Pergunta])
+    ; format('~w (sim/nao): ', [Attr])
     ),
-    flush_output,                            
     read_line_to_string(user_input, RespostaStr),
     normalizar_resposta(RespostaStr, Valor),
-    assertz(fact(Attr, Valor)).              
+    assertz(fact(Attr, Valor)).
+
 
 normalizar_resposta(EntradaStr, sim) :-
     string_lower(EntradaStr, Lower),
@@ -50,6 +51,7 @@ normalizar_resposta(EntradaStr, nao) :-
     member(Atom, [nao, n, no]), !.
 normalizar_resposta(_, nao).
 
+
 encontrar_classe(ClasseFinal) :-
     findall(Prob-Classe, (
         regra(Condicoes, Classe:Prob),
@@ -58,20 +60,20 @@ encontrar_classe(ClasseFinal) :-
     writeln('Regras aplicadas:'),
     writeln(ListaProbs),
     (   ListaProbs \= []
-    ->  sort(0, @>=, ListaProbs, [_-ClasseFinal | _])  
-    ;   
-        ClasseFinal = azul
+    ->  sort(0, @>=, ListaProbs, [_-ClasseFinal | _])
+    ;   ClasseFinal = azul  
     ).
-
-condicoes_satisfeitas_lista([]).
-condicoes_satisfeitas_lista([C|Cs]) :-
-    condicoes_satisfeitas(C),
-    condicoes_satisfeitas_lista(Cs).
 
 condicoes_satisfeitas((Cond1 , Conds)) :-
     condicoes_satisfeitas(Cond1),
     condicoes_satisfeitas(Conds).
 condicoes_satisfeitas(\+ Cond) :-
-    \+ condicoes_satisfeitas(Cond).
+    (   \+ condicoes_satisfeitas(Cond)
+    ).
 condicoes_satisfeitas(fact(A, V)) :-
     fact(A, V).
+
+condicoes_satisfeitas_lista([]).
+condicoes_satisfeitas_lista([C|Cs]) :-
+    condicoes_satisfeitas(C),
+    condicoes_satisfeitas_lista(Cs).
