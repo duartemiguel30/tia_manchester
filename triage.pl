@@ -52,19 +52,19 @@ mostrar_explicacao([CF-Cond|Rest]) :-
 
 
 coletar_sintomas(doenca_mental) :-
-    perguntar_fatos([dm_1, dm_2, dm_3, dm_4, dm_5, dm_6, dm_7, dm_8, dm_9]).
+    perguntar_fatos([dm_1, dm_2, dm_3, dm_4, dm_5, dm_6, dm_7]).
 
 coletar_sintomas(autoagressao) :-
-    perguntar_fatos([aa_1, aa_2, aa_3, aa_4, aa_5, aa_7, aa_8, aa_9, aa_10, aa_11, aa_12, aa_13, aa_14, aa_15]).
+    perguntar_fatos([aa_1, aa_2, aa_3, aa_4, aa_5, aa_6, aa_7]).
 
 coletar_sintomas(mal_estar) :-
-    perguntar_fatos([me_1, me_2, me_3, me_4, me_5, me_6, me_7, me_8, me_9, me_10, me_11, me_12, me_13]).
+    perguntar_fatos([me_1, me_2, me_3, me_4, me_5, me_6, me_7]).
 
 coletar_sintomas(agressao) :-
-    perguntar_fatos([ag_1, ag_2, ag_3]).
+    perguntar_fatos([ag_1, ag_2, ag_3, ag_4, ag_5, ag_6, ag_7]).
 
 coletar_sintomas(embriaguez) :-
-    perguntar_fatos([emb_1, emb_2, emb_3]).
+    perguntar_fatos([emb_1, emb_2, emb_3,emb_4, emb_5, emb_6, emb_7]).
 
 coletar_sintomas(_) :- true.
 

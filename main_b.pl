@@ -3,7 +3,6 @@
 
 :- use_module(triage_b).
 
-
 :- initialization(main).
 
 main :-
