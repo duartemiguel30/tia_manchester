@@ -8,6 +8,7 @@
 ]).
 
 :- use_module(interface, [fact/2]).
+:- use_module(questions, [question/2]).
 
 :- op(800, fx, if).
 :- op(700, xfx, then).
@@ -16,7 +17,7 @@
 
 % Doença Mental
 if(fact(dm_1, sim)) then vermelho:1.
-if(fact(dm_2, sim)) then vermelho:0.95.
+if(fact(dm_2, sim)) then vermelho:1.
 if(fact(dm_3, sim)) then laranja:0.9.
 if(fact(dm_4, sim)) then laranja:0.88.
 if(fact(dm_5, sim)) then amarelo:0.85.
@@ -34,7 +35,7 @@ if(fact(aa_7, sim)) then verde:0.6.
 
 % Mal estar
 if(fact(me_1, sim)) then vermelho:1.
-if(fact(me_2, sim)) then vermelho:0.95.
+if(fact(me_2, sim)) then vermelho:1.
 if(fact(me_3, sim)) then laranja:0.9.
 if(fact(me_4, sim)) then laranja:0.8.
 if(fact(me_5, sim)) then amarelo:0.85.
@@ -43,7 +44,7 @@ if(fact(me_7, sim)) then verde:0.6.
 
 % Agressão
 if(fact(ag_1, sim)) then vermelho:1.   
-if(fact(ag_2, sim)) then vermelho:0.95.  
+if(fact(ag_2, sim)) then vermelho:1.  
 if(fact(ag_3, sim)) then laranja:0.9.  
 if(fact(ag_4, sim)) then laranja:0.8.   
 if(fact(ag_5, sim)) then amarelo:0.85.   
@@ -52,24 +53,28 @@ if(fact(ag_7, sim)) then verde:0.6.
 
 % Embriaguez
 if(fact(emb_1, sim)) then vermelho:1.   
-if(fact(emb_2, sim)) then vermelho:0.95.  
+if(fact(emb_2, sim)) then vermelho:1.  
 if(fact(emb_3, sim)) then laranja:0.9.  
 if(fact(emb_4, sim)) then laranja:0.8.   
 if(fact(emb_5, sim)) then amarelo:0.85.   
 if(fact(emb_6, sim)) then verde:0.75.    
 if(fact(emb_7, sim)) then verde:0.6. 
 
-% ---------------------- Cálculo de CF com explicação ------------------------
+% ---------------------- Auxiliar para extrair ID de 'Cond' ------------------------
 
-rule_cf(ID, Cor, CF) :- clause(if(fact(ID, sim)) then Cor:CF, true).
-rule_cf(ID, Cor, CF) :- clause(if(fact(ID, Valor)) then Cor:CF, true), fact(ID, Valor).
+% Extrai o identificador do fato da condição para buscar o texto correspondente
+cond_id(fact(ID, _), ID).
+
+% ---------------------- Cálculo de CF com explicação (usando texto das perguntas) ------------------------
 
 max_cf_explicado(Conclusion, TotalCF, RegrasAtivadas) :-
-    findall(CF-(Cond), (
+    findall(CF-TextoPergunta, (
         clause(if(Cond) then Conclusion:CF, true),
-        call(Cond)
+        call(Cond),
+        cond_id(Cond, ID),
+        question(ID, TextoPergunta)
     ), ListaRegras),
-    findall(CF, member(CF-_, ListaRegras), CFList),
+    findall(C, member(C-_, ListaRegras), CFList),
     sum_list(CFList, Sum),
     TotalCF is min(Sum, 1.0),
     RegrasAtivadas = ListaRegras.
@@ -84,12 +89,10 @@ diagnostico(ListaCores, MelhorCor, MelhorCF, Explicacao) :-
     (
         member(CFvermelho-vermelho-RegrasVermelho, CFs),
         CFvermelho >= 0.9
-    ->
-        MelhorCor = vermelho,
+    ->  MelhorCor = vermelho,
         MelhorCF = CFvermelho,
         Explicacao = RegrasVermelho
-    ;
-        sort(0, @>=, CFs, [MelhorCF-MelhorCor-Explicacao|_])
+    ;   sort(0, @>=, CFs, [MelhorCF-MelhorCor-Explicacao|_])
     ), !.
 diagnostico(_, azul, 0, []).
 
@@ -101,7 +104,6 @@ dm_diagnostico(Resultado-CF-Exp) :-
 
 aa_diagnostico(Resultado-CF-Exp) :- 
     diagnostico([vermelho, laranja, amarelo, verde], Resultado, CF, Exp).
-    
 
 me_diagnostico(Resultado-CF-Exp) :-
     diagnostico([vermelho, laranja, amarelo, verde], Resultado, CF, Exp).
